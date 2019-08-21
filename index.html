@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Limites_Finca_Kindgard_3.js"></script>
+        <script src="data/CaminosPrincipal_4.js"></script>
+        <script src="data/Caminosinternos_5.js"></script>
+        <script src="data/Lineas_de_Plantacion_6.js"></script>
+        <script src="data/Pozos_de_agua_7.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-23.7409642629926,-65.46693832298334],[-23.73634954008828,-65.45671438600114]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_ESRIWorldImagery_0 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            opacity: 1.0,
+            attribution: '',
+        });
+        layer_ESRIWorldImagery_0;
+        map.addLayer(layer_ESRIWorldImagery_0);
+        var img_UAV_1 = 'data/UAV_1.png';
+        var img_bounds_UAV_1 = [[-23.741476096894942,-65.46650779734179],[-23.732896806325176,-65.4602085502469]];
+        var layer_UAV_1 = new L.imageOverlay(img_UAV_1, img_bounds_UAV_1);
+        bounds_group.addLayer(layer_UAV_1);
+        map.addLayer(layer_UAV_1);
+        var img_IV_UAV_2 = 'data/IV_UAV_2.png';
+        var img_bounds_IV_UAV_2 = [[-23.741476096894942,-65.46650779734179],[-23.732896806325176,-65.4602085502469]];
+        var layer_IV_UAV_2 = new L.imageOverlay(img_IV_UAV_2, img_bounds_IV_UAV_2);
+        bounds_group.addLayer(layer_IV_UAV_2);
+        map.addLayer(layer_IV_UAV_2);
+        function pop_Limites_Finca_Kindgard_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['descriptio'] !== null ? Autolinker.link(String(feature.properties['descriptio'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['timestamp'] !== null ? Autolinker.link(String(feature.properties['timestamp'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['begin'] !== null ? Autolinker.link(String(feature.properties['begin'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['end'] !== null ? Autolinker.link(String(feature.properties['end'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['altitudeMo'] !== null ? Autolinker.link(String(feature.properties['altitudeMo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['tessellate'] !== null ? Autolinker.link(String(feature.properties['tessellate'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['extrude'] !== null ? Autolinker.link(String(feature.properties['extrude'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['visibility'] !== null ? Autolinker.link(String(feature.properties['visibility'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['drawOrder'] !== null ? Autolinker.link(String(feature.properties['drawOrder'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['icon'] !== null ? Autolinker.link(String(feature.properties['icon'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Limites_Finca_Kindgard_3_0() {
+            return {
+                pane: 'pane_Limites_Finca_Kindgard_3',
+                opacity: 1,
+                color: 'rgba(50,47,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Limites_Finca_Kindgard_3');
+        map.getPane('pane_Limites_Finca_Kindgard_3').style.zIndex = 403;
+        map.getPane('pane_Limites_Finca_Kindgard_3').style['mix-blend-mode'] = 'normal';
+        var layer_Limites_Finca_Kindgard_3 = new L.geoJson(json_Limites_Finca_Kindgard_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Limites_Finca_Kindgard_3',
+            layerName: 'layer_Limites_Finca_Kindgard_3',
+            pane: 'pane_Limites_Finca_Kindgard_3',
+            onEachFeature: pop_Limites_Finca_Kindgard_3,
+            style: style_Limites_Finca_Kindgard_3_0,
+        });
+        bounds_group.addLayer(layer_Limites_Finca_Kindgard_3);
+        map.addLayer(layer_Limites_Finca_Kindgard_3);
+        function pop_CaminosPrincipal_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CaminosPrincipal_4_0() {
+            return {
+                pane: 'pane_CaminosPrincipal_4',
+                opacity: 1,
+                color: 'rgba(103,114,30,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CaminosPrincipal_4');
+        map.getPane('pane_CaminosPrincipal_4').style.zIndex = 404;
+        map.getPane('pane_CaminosPrincipal_4').style['mix-blend-mode'] = 'normal';
+        var layer_CaminosPrincipal_4 = new L.geoJson(json_CaminosPrincipal_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CaminosPrincipal_4',
+            layerName: 'layer_CaminosPrincipal_4',
+            pane: 'pane_CaminosPrincipal_4',
+            onEachFeature: pop_CaminosPrincipal_4,
+            style: style_CaminosPrincipal_4_0,
+        });
+        bounds_group.addLayer(layer_CaminosPrincipal_4);
+        map.addLayer(layer_CaminosPrincipal_4);
+        function pop_Caminosinternos_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>longitud</strong><br />' + (feature.properties['longitud'] !== null ? Autolinker.link(String(feature.properties['longitud'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Ancho</strong><br />' + (feature.properties['Ancho'] !== null ? Autolinker.link(String(feature.properties['Ancho'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Caminosinternos_5_0() {
+            return {
+                pane: 'pane_Caminosinternos_5',
+                opacity: 1,
+                color: 'rgba(26,26,225,1.0)',
+                dashArray: '10,5',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Caminosinternos_5');
+        map.getPane('pane_Caminosinternos_5').style.zIndex = 405;
+        map.getPane('pane_Caminosinternos_5').style['mix-blend-mode'] = 'normal';
+        var layer_Caminosinternos_5 = new L.geoJson(json_Caminosinternos_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Caminosinternos_5',
+            layerName: 'layer_Caminosinternos_5',
+            pane: 'pane_Caminosinternos_5',
+            onEachFeature: pop_Caminosinternos_5,
+            style: style_Caminosinternos_5_0,
+        });
+        bounds_group.addLayer(layer_Caminosinternos_5);
+        map.addLayer(layer_Caminosinternos_5);
+        function pop_Lineas_de_Plantacion_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>longitud</strong><br />' + (feature.properties['longitud'] !== null ? Autolinker.link(String(feature.properties['longitud'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Variedad</th>\
+                        <td>' + (feature.properties['Variedad'] !== null ? Autolinker.link(String(feature.properties['Variedad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Año</strong><br />' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>layer</strong><br />' + (feature.properties['layer'] !== null ? Autolinker.link(String(feature.properties['layer'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lineas_de_Plantacion_6_0() {
+            return {
+                pane: 'pane_Lineas_de_Plantacion_6',
+                opacity: 1,
+                color: 'rgba(108,222,36,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lineas_de_Plantacion_6');
+        map.getPane('pane_Lineas_de_Plantacion_6').style.zIndex = 406;
+        map.getPane('pane_Lineas_de_Plantacion_6').style['mix-blend-mode'] = 'normal';
+        var layer_Lineas_de_Plantacion_6 = new L.geoJson(json_Lineas_de_Plantacion_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lineas_de_Plantacion_6',
+            layerName: 'layer_Lineas_de_Plantacion_6',
+            pane: 'pane_Lineas_de_Plantacion_6',
+            onEachFeature: pop_Lineas_de_Plantacion_6,
+            style: style_Lineas_de_Plantacion_6_0,
+        });
+        bounds_group.addLayer(layer_Lineas_de_Plantacion_6);
+        map.addLayer(layer_Lineas_de_Plantacion_6);
+        function pop_Pozos_de_agua_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Año</strong><br />' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>N estatico</strong><br />' + (feature.properties['N estatico'] !== null ? Autolinker.link(String(feature.properties['N estatico'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>N dinamico</strong><br />' + (feature.properties['N dinamico'] !== null ? Autolinker.link(String(feature.properties['N dinamico'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Q (m3/h)</strong><br />' + (feature.properties['Q (m3/h)'] !== null ? Autolinker.link(String(feature.properties['Q (m3/h)'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>p bom (HP)</strong><br />' + (feature.properties['p bom (HP)'] !== null ? Autolinker.link(String(feature.properties['p bom (HP)'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Marca bomb</strong><br />' + (feature.properties['Marca bomb'] !== null ? Autolinker.link(String(feature.properties['Marca bomb'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Pozos_de_agua_7_0() {
+            return {
+                pane: 'pane_Pozos_de_agua_7',
+                radius: 6.400000000000002,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Pozos_de_agua_7');
+        map.getPane('pane_Pozos_de_agua_7').style.zIndex = 407;
+        map.getPane('pane_Pozos_de_agua_7').style['mix-blend-mode'] = 'normal';
+        var layer_Pozos_de_agua_7 = new L.geoJson(json_Pozos_de_agua_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Pozos_de_agua_7',
+            layerName: 'layer_Pozos_de_agua_7',
+            pane: 'pane_Pozos_de_agua_7',
+            onEachFeature: pop_Pozos_de_agua_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Pozos_de_agua_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Pozos_de_agua_7);
+        map.addLayer(layer_Pozos_de_agua_7);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Pozos_de_agua_7.png" /> Pozos_de_agua': layer_Pozos_de_agua_7,'<img src="legend/Lineas_de_Plantacion_6.png" /> Lineas_de_Plantacion': layer_Lineas_de_Plantacion_6,'<img src="legend/Caminosinternos_5.png" /> Caminos internos': layer_Caminosinternos_5,'<img src="legend/CaminosPrincipal_4.png" /> Caminos Principal': layer_CaminosPrincipal_4,'<img src="legend/Limites_Finca_Kindgard_3.png" /> Limites_Finca_Kindgard': layer_Limites_Finca_Kindgard_3,"IV_UAV": layer_IV_UAV_2,"UAV": layer_UAV_1,"ESRI World Imagery": layer_ESRIWorldImagery_0,}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
